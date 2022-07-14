@@ -9,7 +9,7 @@ const prefix = config.prefix;
 var arrayOfRoles= ['Carry','Middle','Hardlane','Semi-support','Full-Support'];
 var arrayOfPlayers = [];
 var dotaHeroes = ['Abaddon','Alchemist','Axe','Beastmaster','Brewmaster','Bristleback','Centaur Warrunner','Chaos Knight','Clockwerk','Dawnbreaker','Doom','Dragon Knight','Earth Spirit','Earthshaker','Elder Titan','Huskar','Io','Kunkka','Legion Commander','Lifestealer','Lycan','Magnus','Marci','Mars','Night Stalker','Omniknight','Phoenix','Primal Beast','Pudge','Sand King','Slardar','Snapfire','Spirit Breaker','Sven','Tidehunter','Timbersaw','Tiny','Treant Protector','Tusk','Underlord','Undying','Wraith King','Anti-Mage','Arc Warden','Bloodseeker','Bounty Hunter','Broodmother','Clinkz','Drow Ranger','Ember Spirit','Faceless Void','Gyrocopter','Hoodwink','Juggernaut','Lone Druid','Luna','Medusa','Meepo','Mirana','Monkey King','Morphling','Naga Siren','Nyx Assassin','Pangolier','Phantom Assassin','Phantom Lancer','Razor','Riki','Shadow Fiend','Slark','Sniper','Spectre','Templar Assassin','Terrorblade','Troll Warlord','Ursa','Vengeful Spirit','Venomancer','Viper','Weaver','Ancient Apparition','Bane','Batrider','Chen','Crystal Maiden','Dark Seer','Dark Willow','Dazzle','Death Prophet','Disruptor','Enchantress','Enigma','Grimstroke','Invoker','Jakiro','Keeper of the Light','Leshrac','Lich','Lina','Lion','Natures Prophet','Necrophos','Ogre Magi','Oracle','Outworld Destroyer','Puck','Pugna','Queen of Pain','Rubick','Shadow Demon','Shadow Shaman','Silencer','Skywrath Mage','Storm Spirit','Techies','Tinker','Visage','Void Spirit','Warlock','Windranger','Winter Wyvern','Witch Doctor','Zeus'];
-
+let userAnswer;
 
 const { Client, Intents } = require('discord.js');
     
@@ -44,32 +44,45 @@ function shuffle(array) {
 
 
 client.on('messageCreate', (message) =>{
-    if (message.content == "hi"){
-        shuffle(arrayOfRoles);
-            
+    
+    if(!message.content.startsWith(prefix)) return;
 
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const command = args.shift().toLowerCase();
+
+
+    if (command === "hi"){
+        shuffle(arrayOfRoles);
         message.member.voice.channel.members.each(member=>{
             arrayOfPlayers.push(member.user.tag);
          });
+
+         if(arrayOfPlayers.length > 5){
+            message.reply("Дохуя че то вас, выберете кого убрать нахуй")
+            for(;arrayOfPlayers.length>1;){ 
+                userAnswer = Number(command)
+                arrayOfPlayers = arrayOfPlayers.filter(item => item !== userAnswer)
+            }
+
+            }
+         
+
+
     if(arrayOfPlayers.length <= 5){
          for (let index = 0; index < arrayOfPlayers.length; index++) {
-            arrayOfPlayers[index] = arrayOfPlayers[index] + arrayOfRoles[index];
-          };
-
-          for (let index = 0; index < arrayOfPlayers.length; index++) {
-            message.reply(arrayOfPlayers[index])
-          };
-    }else{
-        message.reply("Дохуя че то вас, выберете кого убрать нахуй")
-        for (let index = 0; index < arrayOfPlayers.length; index++) {
-            message.reply(index + arrayOfPlayers[index])
-        }
+            arrayOfPlayers[index] = arrayOfPlayers[index] +" "+ arrayOfRoles[index];
+            message.reply(arrayOfPlayers[index]);
+          };    
     }
+
+
+
           arrayOfPlayers=[];
 
 
     }
-    if(message.content == "ho"){
+
+    if(command === "ho"){
         message.reply("Ваш герой "+ dotaHeroes[Math.floor(Math.random()*dotaHeroes.length)])
         
     }
