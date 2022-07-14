@@ -1,0 +1,18 @@
+{
+  "name": "discordbot",
+  "version": "1.0.0",
+  "description": "Discord bot dlya togo chtobi rollit v dote roli",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "hhtps://github.com/Sovngarded/DiscordBotForFriends"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.8.1"
+  }
+}
