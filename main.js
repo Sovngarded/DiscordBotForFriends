@@ -61,13 +61,14 @@ client.on('messageCreate', (message) =>{
     if (command === "hi"){
         shuffle(arrayOfRoles);
         shuffle(arrayOfRolesIfVanya);
-
+        arrayOfPlayers=[];
+        
         message.member.voice.channel.members.each(member=>{
             arrayOfPlayers.push(member.user.tag);
          });
 
-         if(arrayOfPlayers.length > 6){
-            message.reply("Дохуя че то вас, выберете кого убрать нахуй")
+         if(arrayOfPlayers.length > 5){
+            message.reply("Дохуя че то вас, выберете кто играет в доку")
             for(;arrayOfPlayers.length>1;){ 
                 userAnswer = Number(command)
                 arrayOfPlayers = arrayOfPlayers.filter(item => item !== userAnswer)
@@ -77,23 +78,23 @@ client.on('messageCreate', (message) =>{
          
 
 
-    if(arrayOfPlayers.length <= 6 && !arrayOfPlayers.includes("P4LADIN#3127")){
+    if(arrayOfPlayers.length <= 5 && !arrayOfPlayers.includes("P4LADIN#3127")){
          for (let index = 0; index < arrayOfPlayers.length; index++) {
             arrayOfPlayers[index] = arrayOfPlayers[index] +" "+ arrayOfRoles[index];
             message.reply(arrayOfPlayers[index]);
           };    
     }
-    if(arrayOfPlayers.length <= 6 && arrayOfPlayers.includes("P4LADIN#3127")){
+    if(arrayOfPlayers.length <= 5 && arrayOfPlayers.includes("P4LADIN#3127")){
         var filteredArray = arrayOfPlayers.filter(function(e) { return e !== 'P4LADIN#3127' })
         for (let index = 0; index < filteredArray.length; index++) {
            filteredArray[index] = filteredArray[index] +" "+ arrayOfRolesIfVanya[index];
            message.reply(filteredArray[index]);
-           message.reply("P4LADIN#3127 Full-Support")
-         };    
+         };  
+         message.reply("P4LADIN#3127 FULL CARRY")  
    }
 
 
-          arrayOfPlayers=[];
+          
 
 
     }
